@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* ─── Warm Workspace Palette ─── */
+  --color-warm-bg: #F6F3EA;
+  --color-warm-workspace: #F9F6EE;
+  --color-warm-card: #FCFAF5;
+  --color-warm-border: rgba(0, 0, 0, 0.08);
+  --color-warm-text: #1E1E1E;
+  --color-warm-muted: #5C5C5C;
+
+  /* Brand Palette */
+  --color-brand-primary: #FFBF00;
+  --color-brand-secondary: #F2CF7E;
+  --color-brand-highlight: #FFE642;
+  --color-brand-action: #FF7900;
+
+  /* Semantic overrides so Tailwind classes map to our palette */
+  --color-zinc-50: #FCFAF5;
+  --color-zinc-100: #F9F6EE;
+  --color-zinc-200: #F0ECE0;
+  --color-zinc-300: #E0DBD0;
+  --color-zinc-400: #9A9590;
+  --color-zinc-500: #5C5C5C;
+  --color-zinc-600: #4A4A4A;
+  --color-zinc-700: #3A3A3A;
+  --color-zinc-800: rgba(0, 0, 0, 0.08);
+  --color-zinc-850: rgba(0, 0, 0, 0.05);
+  --color-zinc-900: #FCFAF5;
+  --color-zinc-950: #F6F3EA;
+}
+
+/* ─── Base ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F6F3EA;
+  color: #1E1E1E;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F6F3EA;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+/* ─── Skeleton Shimmer ─── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #F0ECE0 25%, #F9F6EE 50%, #F0ECE0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.8s ease-in-out infinite;
+  border-radius: 0.75rem;
+}
+
+/* ─── Fade In Up ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.35s ease-out forwards;
+}
+
+.stagger-children>* {
+  opacity: 0;
+  animation: fadeInUp 0.3s ease-out forwards;
+}
+
+.stagger-children>*:nth-child(1) {
+  animation-delay: 0.04s;
+}
+
+.stagger-children>*:nth-child(2) {
+  animation-delay: 0.08s;
+}
+
+.stagger-children>*:nth-child(3) {
+  animation-delay: 0.12s;
+}
+
+.stagger-children>*:nth-child(4) {
+  animation-delay: 0.16s;
+}
+
+.stagger-children>*:nth-child(5) {
+  animation-delay: 0.20s;
+}
+
+/* ─── Slide In Right ─── */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+/* ─── Card Hover ─── */
+.card-hover {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+/* ─── Section Anchors ─── */
+.report-section {
+  scroll-margin-top: 5rem;
+}
+
+/* ─── Focus Visible ─── */
+:focus-visible {
+  outline: 2px solid #FFBF00;
+  outline-offset: 2px;
+}
+
+/* ─── Score Gauge ─── */
+.score-gauge {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-gauge-ring {
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-gauge-inner {
+  border-radius: 9999px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}

@@ -1,17 +1,31 @@
+# Node
+node_modules/
+dist/
+.vite/
+
 # Java
 target/
 *.class
 
-# Node
-node_modules/
-
-# Env
+# Environment
 .env
+.env.*
+application-local.properties
 
 # IDE
-.idea/
 .vscode/
+.idea/
 
 # Logs
-logs/
 *.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
+backend/ventureverse-api/src/main/resources/application.properties
+
+# Environment files
+.env
+.env.*
