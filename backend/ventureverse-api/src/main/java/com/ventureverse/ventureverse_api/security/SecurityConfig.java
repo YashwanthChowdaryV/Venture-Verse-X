@@ -20,6 +20,7 @@ import java.util.List;
 public class SecurityConfig {
 
         private final JwtAuthenticationFilter jwtFilter;
+        private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
         @Bean
         public PasswordEncoder passwordEncoder() {
@@ -41,25 +42,32 @@ public class SecurityConfig {
         }
 
         @Bean
-        public SecurityFilterChain securityFilterChain(
-                        HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
                 http
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                                 .csrf(csrf -> csrf.disable())
-                                .sessionManagement(session -> session.sessionCreationPolicy(
-                                                SessionCreationPolicy.STATELESS))
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(
                                                                 "/api/v1/auth/**",
                                                                 "/api/v1/users/**",
-                                                                "/api/v1/reports/export/**")
+                                                                "/api/v1/reports/export/**",
+                                                                "/api/v1/search/**",
+                                                                "/oauth2/**",
+                                                                "/api/v1/knowledge/**",
+                                                                "/api/v1/search/**",
+                                                                "/login/oauth2/**")
                                                 .permitAll()
-                                                .anyRequest()
-                                                .authenticated())
-                                .addFilterBefore(
-                                                jwtFilter,
-                                                UsernamePasswordAuthenticationFilter.class);
+                                                .anyRequest().authenticated())
+                                .oauth2Login(oauth2 -> oauth2
+                                                .successHandler(oAuth2AuthenticationSuccessHandler)
+                                                .failureHandler((request, response, exception) -> {
+                                                        response.sendRedirect(
+                                                                        "http://localhost:5173/login?error=google_auth_failed");
+                                                }))
+                                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();
         }

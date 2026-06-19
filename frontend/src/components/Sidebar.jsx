@@ -3,7 +3,7 @@ import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Plus, ChevronDown, Check, X, Brain, Settings,
   Building2, FileText, TrendingUp, Target, BarChart2, Users, Shield,
-  Layers, History, Sparkles, LogOut, Menu
+  Layers, History, Sparkles, LogOut, Menu, Database
 } from 'lucide-react';
 import { startupAPI } from '../api/api';
 import { useAuth } from '../context/AuthContext';
@@ -94,6 +94,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     const path = location.pathname;
     if (path.includes('/dashboard')) return 'Portfolio Dashboard';
     if (path.includes('/create-startup')) return 'New Venture';
+    if (path.includes('/knowledge')) return 'Knowledge Intelligence';
     if (path.includes('/settings')) return 'Settings';
     if (path.includes('/startups/')) {
       if (path.includes('/executive-summary')) return 'Executive Summary';
@@ -165,6 +166,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
   const globalTabs = [
     { name: 'Portfolio Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'Knowledge Intelligence', path: '/knowledge', icon: Database },
     { name: 'Settings', path: '/settings', icon: Settings },
   ];
 

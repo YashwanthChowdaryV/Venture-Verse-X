@@ -2,6 +2,7 @@ package com.ventureverse.ventureverse_api.security;
 
 import com.ventureverse.ventureverse_api.entities.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -21,7 +22,9 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        // Default role for all users
+        // You can enhance this later with actual roles
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
@@ -31,6 +34,43 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
+        // Return username instead of email
+        // Spring Security uses this for authentication context
+        return user.getUsername();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return user.getEnabled() != null ? user.getEnabled() : true;
+    }
+
+    // Utility method to get email
+    public String getEmail() {
         return user.getEmail();
+    }
+
+    // Utility method to get full name
+    public String getFullName() {
+        return user.getFullName();
+    }
+
+    // Utility method to get user ID
+    public Long getUserId() {
+        return user.getId();
     }
 }

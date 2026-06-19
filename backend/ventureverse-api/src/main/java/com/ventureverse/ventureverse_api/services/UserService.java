@@ -9,7 +9,12 @@ public interface UserService {
 
     UserResponse createUser(UserCreateRequest request);
 
+    UserResponse getCurrentUser();
+
     AuthResponse login(LoginRequest request);
 
-    UserResponse getCurrentUser();
+    // NEW: Username and email availability checks
+    boolean usernameExists(String username);
+
+    boolean emailExists(String email);
 }

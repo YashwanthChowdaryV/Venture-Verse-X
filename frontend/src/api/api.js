@@ -26,10 +26,12 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Clear token and reload or redirect if unauthorized
+      // Clear all user data on unauthorized
       localStorage.removeItem('token');
       localStorage.removeItem('email');
       localStorage.removeItem('fullName');
+      localStorage.removeItem('username');
+      localStorage.removeItem('userId');
       window.location.href = '/login';
     }
     return Promise.reject(error);
@@ -37,18 +39,45 @@ api.interceptors.response.use(
 );
 
 export const authAPI = {
-  login: async (email, password) => {
-    const response = await api.post('/auth/login', { email, password });
-    return response.data; // { token, email, fullName }
+  // Login with email OR username
+  login: async (login, password) => {
+    const response = await api.post('/auth/login', { login, password });
+    return response.data; // { token, id, fullName, username, email, emailVerified }
   },
-  register: async (fullName, email, password) => {
-    // Backend registration is at POST /api/v1/users
-    const response = await api.post('/users', { fullName, email, password });
-    return response.data; // { id, fullName, email }
+
+  // Register with username
+  register: async (fullName, username, email, password) => {
+    const response = await api.post('/auth/register', {
+      fullName,
+      username,
+      email,
+      password
+    });
+    return response.data; // { token, id, fullName, username, email, emailVerified }
   },
+
+  // Get current authenticated user
+  getCurrentUser: async () => {
+    const response = await api.get('/auth/me');
+    return response.data; // { id, fullName, username, email, emailVerified, createdAt }
+  },
+
+  // Check username availability
+  checkUsername: async (username) => {
+    const response = await api.get(`/auth/check-username?username=${encodeURIComponent(username)}`);
+    return response.data; // { available: true/false }
+  },
+
+  // Check email availability
+  checkEmail: async (email) => {
+    const response = await api.get(`/auth/check-email?email=${encodeURIComponent(email)}`);
+    return response.data; // { available: true/false }
+  },
+
+  // Legacy: Get profile (alternative endpoint)
   getProfile: async () => {
-    const response = await api.get('/users/me');
-    return response.data; // { id, fullName, email }
+    const response = await api.get('/auth/me');
+    return response.data; // { id, fullName, username, email }
   },
 };
 
@@ -120,7 +149,7 @@ export const agentAPI = {
     return response.data;
   },
 
-  // In orchestratorAPI object
+  // Download report
   downloadReport: (reportId) => {
     return api.get(`/reports/export/${reportId}`, {
       responseType: 'blob'

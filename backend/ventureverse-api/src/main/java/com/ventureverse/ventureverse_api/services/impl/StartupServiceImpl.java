@@ -18,88 +18,79 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StartupServiceImpl implements StartupService {
 
-    private final StartupRepository startupRepository;
-    private final UserRepository userRepository;
+        private final StartupRepository startupRepository;
+        private final UserRepository userRepository;
 
-    @Override
-    public StartupResponse createStartup(
-            StartupCreateRequest request) {
+        @Override
+        public StartupResponse createStartup(
+                        StartupCreateRequest request) {
 
-        String email =
-                SecurityUtils.getCurrentUserEmail();
+                String email = SecurityUtils.getCurrentUserEmail();
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+                User user = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        Startup startup = Startup.builder()
-                .startupName(request.getStartupName())
-                .ideaDescription(request.getIdeaDescription())
-                .industry(request.getIndustry())
-                .targetMarket(request.getTargetMarket())
-                .owner(user)
-                .createdAt(LocalDateTime.now())
-                .build();
+                Startup startup = Startup.builder()
+                                .startupName(request.getStartupName())
+                                .ideaDescription(request.getIdeaDescription())
+                                .industry(request.getIndustry())
+                                .targetMarket(request.getTargetMarket())
+                                .owner(user)
+                                .createdAt(LocalDateTime.now())
+                                .build();
 
-        Startup saved =
-                startupRepository.save(startup);
+                Startup saved = startupRepository.save(startup);
 
-        return map(saved);
-    }
-
-    @Override
-    public List<StartupResponse> getMyStartups() {
-
-        String email =
-                SecurityUtils.getCurrentUserEmail();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
-
-        return startupRepository
-                .findByOwnerId(user.getId())
-                .stream()
-                .map(this::map)
-                .toList();
-    }
-
-    @Override
-    public StartupResponse getStartupById(Long id) {
-
-        String email =
-                SecurityUtils.getCurrentUserEmail();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
-
-        Startup startup =
-                startupRepository.findById(id)
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Startup not found"));
-
-        if (!startup.getOwner()
-                .getId()
-                .equals(user.getId())) {
-
-            throw new RuntimeException(
-                    "Access denied");
+                return map(saved);
         }
 
-        return map(startup);
-    }
+        @Override
+        public List<StartupResponse> getMyStartups() {
 
-    private StartupResponse map(
-            Startup startup) {
+                String email = SecurityUtils.getCurrentUserEmail();
 
-        return StartupResponse.builder()
-                .id(startup.getId())
-                .startupName(startup.getStartupName())
-                .ideaDescription(startup.getIdeaDescription())
-                .industry(startup.getIndustry())
-                .targetMarket(startup.getTargetMarket())
-                .build();
-    }
+                User user = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+
+                return startupRepository
+                                .findByOwnerId(user.getId())
+                                .stream()
+                                .map(this::map)
+                                .toList();
+        }
+
+        @Override
+        public StartupResponse getStartupById(Long id) {
+
+                String email = SecurityUtils.getCurrentUserEmail();
+
+                User user = userRepository.findByEmail(email)
+                                .orElseThrow(() -> new RuntimeException("User not found"));
+
+                Startup startup = startupRepository.findById(id)
+                                .orElseThrow(() -> new RuntimeException(
+                                                "Startup not found"));
+
+                if (!startup.getOwner()
+                                .getId()
+                                .equals(user.getId())) {
+
+                        throw new RuntimeException(
+                                        "Access denied");
+                }
+
+                return map(startup);
+        }
+
+        private StartupResponse map(
+                        Startup startup) {
+
+                return StartupResponse.builder()
+                                .id(startup.getId())
+                                .startupName(startup.getStartupName())
+                                .ideaDescription(startup.getIdeaDescription())
+                                .industry(startup.getIndustry())
+                                .targetMarket(startup.getTargetMarket())
+                                .build();
+        }
 }
