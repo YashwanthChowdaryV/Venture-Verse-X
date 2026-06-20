@@ -24,6 +24,14 @@ import {
   Play,
   History,
   Loader2,
+  Brain,
+  BookOpen,
+  GraduationCap,
+  Compass,
+  Rocket,
+  Globe,
+  Lightbulb,
+  MessageSquare
 } from 'lucide-react';
 
 const DashboardPage = () => {
@@ -145,6 +153,11 @@ const DashboardPage = () => {
     }
   };
 
+  // Navigate to Knowledge Page
+  const goToKnowledge = () => {
+    navigate('/knowledge');
+  };
+
   if (loading) {
     return (
       <div className="relative min-h-screen overflow-hidden rounded-[28px]">
@@ -200,34 +213,83 @@ const DashboardPage = () => {
                   AI-Powered Venture Evaluation, Due Diligence & Investment Readiness Analysis
                 </p>
               </div>
-              <Link to="/create-startup"
-                className="group inline-flex w-fit items-center justify-center gap-2 rounded-xl border px-5 py-3 text-xs font-black transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(255,121,0,0.28)]"
-                style={{ background: '#1E1E1E', borderColor: '#1E1E1E', color: '#FFE642' }}>
-                <Plus className="h-4 w-4" /> Add New Venture
-                <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                {/* Knowledge Button - Prominent */}
+                <button
+                  onClick={goToKnowledge}
+                  className="group inline-flex w-fit items-center justify-center gap-2 rounded-xl border px-5 py-3 text-xs font-black transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(255,121,0,0.28)]"
+                  style={{
+                    background: 'linear-gradient(135deg, #1E1E1E, #2D2D2D)',
+                    borderColor: '#1E1E1E',
+                    color: '#FFE642'
+                  }}
+                >
+                  <Brain className="h-4 w-4" />
+                  <span className="flex items-center gap-2">
+                    Dive Deep into AI Knowledge
+                    <Rocket className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </span>
+                </button>
+
+                {/* Create Startup Button */}
+                <Link to="/create-startup"
+                  className="group inline-flex w-fit items-center justify-center gap-2 rounded-xl border px-5 py-3 text-xs font-black transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_rgba(255,121,0,0.28)]"
+                  style={{ background: '#1E1E1E', borderColor: '#1E1E1E', color: '#FFE642' }}>
+                  <Plus className="h-4 w-4" /> Add New Venture
+                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </div>
             </div>
 
-            <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-5">
               {[
                 { label: 'Total Ventures', value: startups.length, icon: Layers, accent: '#FFBF00' },
                 { label: 'Reports Generated', value: intelligenceData.totalReports, icon: FileText, accent: '#F2CF7E' },
                 { label: 'Average Readiness', value: intelligenceData.avgScore > 0 ? `${intelligenceData.avgScore}/100` : '--', icon: Gauge, accent: '#FFE642' },
                 { label: 'AI Agents Online', value: '6 / 6', icon: Bot, accent: '#FF7900' },
+                {
+                  label: 'AI Knowledge',
+                  value: 'Explore',
+                  icon: Brain,
+                  accent: '#FFBF00',
+                  isClickable: true,
+                  onClick: goToKnowledge
+                },
               ].map((metric) => {
                 const MetricIcon = metric.icon;
                 return (
-                  <div key={metric.label}
-                    className="group rounded-2xl border p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 sm:p-5"
-                    style={{ background: 'rgba(255,255,255,0.58)', borderColor: 'rgba(30,30,30,0.12)' }}>
+                  <div
+                    key={metric.label}
+                    onClick={metric.isClickable ? metric.onClick : undefined}
+                    className={`group rounded-2xl border p-4 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 sm:p-5 ${metric.isClickable ? 'cursor-pointer hover:shadow-[0_12px_30px_rgba(255,121,0,0.25)]' : ''
+                      }`}
+                    style={{
+                      background: metric.isClickable
+                        ? 'linear-gradient(135deg, rgba(255,255,255,0.7), rgba(255,191,0,0.15))'
+                        : 'rgba(255,255,255,0.58)',
+                      borderColor: metric.isClickable
+                        ? 'rgba(255,121,0,0.3)'
+                        : 'rgba(30,30,30,0.12)'
+                    }}
+                  >
                     <div className="flex items-center justify-between">
                       <span className="flex h-8 w-8 items-center justify-center rounded-lg" style={{ background: metric.accent }}>
                         <MetricIcon className="h-4 w-4" style={{ color: '#1E1E1E' }} />
                       </span>
-                      <span className="h-1.5 w-1.5 rounded-full" style={{ background: metric.accent }} />
+                      {metric.isClickable && (
+                        <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#FF7900' }} />
+                      )}
                     </div>
                     <p className="mt-5 text-xl font-black tracking-tight sm:text-2xl" style={{ color: '#1E1E1E' }}>{metric.value}</p>
                     <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.16em]" style={{ color: 'rgba(30,30,30,0.58)' }}>{metric.label}</p>
+                    {metric.isClickable && (
+                      <p className="mt-1 text-[8px] font-medium text-[#FF7900] flex items-center gap-1">
+                        <Rocket className="h-2.5 w-2.5" />
+                        Discover AI insights
+                      </p>
+                    )}
                   </div>
                 );
               })}
@@ -245,9 +307,24 @@ const DashboardPage = () => {
               </div>
               <h2 className="mt-2 text-2xl font-black tracking-[-0.03em]" style={{ color: '#1E1E1E' }}>Startup Intelligence Overview</h2>
             </div>
-            <p className="max-w-md text-xs leading-5 sm:text-right" style={{ color: '#5C5C5C' }}>
-              Investor-grade signals across startup quality, diligence depth, risk, and investment readiness.
-            </p>
+            <div className="flex items-center gap-3">
+              <p className="max-w-md text-xs leading-5 sm:text-right" style={{ color: '#5C5C5C' }}>
+                Investor-grade signals across startup quality, diligence depth, risk, and investment readiness.
+              </p>
+              <button
+                onClick={goToKnowledge}
+                className="group flex items-center gap-2 px-4 py-2 rounded-xl border text-[10px] font-bold transition-all hover:-translate-y-0.5"
+                style={{
+                  background: 'linear-gradient(135deg, #1E1E1E, #2D2D2D)',
+                  borderColor: '#1E1E1E',
+                  color: '#FFE642'
+                }}
+              >
+                <Brain className="h-3.5 w-3.5" />
+                <span>AI Knowledge</span>
+                <ArrowUpRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </button>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -273,17 +350,29 @@ const DashboardPage = () => {
                 surface: 'linear-gradient(145deg, #FCFAF5 55%, rgba(255,230,66,0.22) 100%)',
               },
               {
-                label: 'Intelligence Depth', value: intelligenceData.totalReports, suffix: 'reports generated',
-                status: hasReports ? 'Analysis online' : 'Ready to analyze',
-                icon: ShieldCheck, color: '#FF7900', tint: 'rgba(255,121,0,0.14)',
+                label: 'Knowledge Center',
+                value: 'AI Powered',
+                suffix: '290+ documents',
+                status: 'Learn & discover',
+                icon: BookOpen,
+                color: '#FF7900',
+                tint: 'rgba(255,121,0,0.14)',
                 surface: 'linear-gradient(145deg, #FCFAF5 55%, rgba(255,121,0,0.14) 100%)',
+                isClickable: true,
+                onClick: goToKnowledge,
               },
             ].map((card) => {
               const CardIcon = card.icon;
               return (
-                <div key={card.label}
-                  className="group relative overflow-hidden rounded-2xl border p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(30,30,30,0.08)]"
-                  style={{ background: card.surface, borderColor: `${card.color}55` }}>
+                <div
+                  key={card.label}
+                  onClick={card.isClickable ? card.onClick : undefined}
+                  className={`group relative overflow-hidden rounded-2xl border p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(30,30,30,0.08)] ${card.isClickable ? 'cursor-pointer hover:shadow-[0_18px_45px_rgba(255,121,0,0.15)]' : ''
+                    }`}
+                  style={{
+                    background: card.surface,
+                    borderColor: card.isClickable ? `${card.color}66` : `${card.color}55`
+                  }}>
                   <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-full opacity-70 transition-transform duration-500 group-hover:scale-110"
                     style={{ background: card.tint }} />
                   <div className="relative">
@@ -299,7 +388,11 @@ const DashboardPage = () => {
                     <p className="mt-2 truncate text-2xl font-black tracking-[-0.03em]" style={{ color: '#1E1E1E' }}>{card.value}</p>
                     <div className="mt-4 flex items-center justify-between border-t pt-3" style={{ borderColor: 'rgba(0,0,0,0.06)' }}>
                       <span className="text-[10px] font-semibold" style={{ color: '#5C5C5C' }}>{card.suffix}</span>
-                      <TrendingUp className="h-3.5 w-3.5 opacity-70" style={{ color: card.color }} />
+                      {card.isClickable ? (
+                        <Rocket className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" style={{ color: card.color }} />
+                      ) : (
+                        <TrendingUp className="h-3.5 w-3.5 opacity-70" style={{ color: card.color }} />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -325,11 +418,20 @@ const DashboardPage = () => {
                     <p className="mt-0.5 text-[10px]" style={{ color: '#5C5C5C' }}>{startups.length} venture{startups.length !== 1 ? 's' : ''} registered</p>
                   </div>
                 </div>
-                <Link to="/create-startup"
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[10px] font-black transition-all hover:-translate-y-0.5 border"
-                  style={{ background: '#FFBF00', borderColor: 'rgba(0,0,0,0.08)', color: '#1E1E1E' }}>
-                  <Plus className="w-3 h-3" /> New Venture
-                </Link>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={goToKnowledge}
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[10px] font-black transition-all hover:-translate-y-0.5 border"
+                    style={{ background: 'rgba(255,121,0,0.08)', borderColor: 'rgba(255,121,0,0.2)', color: '#FF7900' }}
+                  >
+                    <Brain className="w-3 h-3" /> Knowledge
+                  </button>
+                  <Link to="/create-startup"
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-[10px] font-black transition-all hover:-translate-y-0.5 border"
+                    style={{ background: '#FFBF00', borderColor: 'rgba(0,0,0,0.08)', color: '#1E1E1E' }}>
+                    <Plus className="w-3 h-3" /> New Venture
+                  </Link>
+                </div>
               </div>
             </div>
             <div className="p-4 max-h-[600px] overflow-y-auto">
@@ -418,14 +520,23 @@ const DashboardPage = () => {
             style={{ background: '#FCFAF5', borderColor: 'rgba(255,121,0,0.24)' }}>
             <div className="border-b px-6 py-5 flex-shrink-0"
               style={{ background: 'linear-gradient(105deg, rgba(255,121,0,0.14), rgba(255,191,0,0.12))', borderColor: 'rgba(255,121,0,0.22)' }}>
-              <div className="flex items-center gap-3">
-                <div className="rounded-lg p-2" style={{ background: 'rgba(255,121,0,0.09)' }}>
-                  <Zap className="h-4 w-4" style={{ color: '#FF7900' }} />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="rounded-lg p-2" style={{ background: 'rgba(255,121,0,0.09)' }}>
+                    <Zap className="h-4 w-4" style={{ color: '#FF7900' }} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-black" style={{ color: '#1E1E1E' }}>Activity Timeline</h3>
+                    <p className="mt-0.5 text-[10px]" style={{ color: '#5C5C5C' }}>Latest intelligence events</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-sm font-black" style={{ color: '#1E1E1E' }}>Activity Timeline</h3>
-                  <p className="mt-0.5 text-[10px]" style={{ color: '#5C5C5C' }}>Latest intelligence events</p>
-                </div>
+                <button
+                  onClick={goToKnowledge}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all hover:bg-[#FF7900]/10 border"
+                  style={{ background: 'rgba(255,121,0,0.06)', borderColor: 'rgba(255,121,0,0.15)', color: '#FF7900' }}
+                >
+                  <Brain className="w-3 h-3" /> AI Knowledge
+                </button>
               </div>
             </div>
             <div className="px-6 py-4 flex-1 overflow-y-auto max-h-[600px]">

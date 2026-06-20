@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DollarSign, TrendingUp, Clock, Flame, CreditCard, BarChart2, RefreshCw, PiggyBank, Target, Activity, ArrowUpRight, ShieldCheck, Sparkles, ArrowUp, ArrowDown, Minus, Layers, Zap, Download } from 'lucide-react';
+import { DollarSign, TrendingUp, Clock, Flame, CreditCard, BarChart2, PiggyBank, ArrowUp, ArrowDown, Minus } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine, LabelList } from 'recharts';
 import ScoreGauge from '../ui/ScoreGauge';
 import ExportReportModal from '../ui/ExportReportModal';
@@ -38,7 +38,7 @@ const renderCustomLabel = (props) => {
   );
 };
 
-const FinanceSection = ({ data, startupId, onReRunAgent, reRunningAgent, startupName = 'Venture' }) => {
+const FinanceSection = ({ data, startupName = 'Venture' }) => {
   const [isExportOpen, setIsExportOpen] = useState(false);
 
   if (!data) return (
@@ -47,8 +47,6 @@ const FinanceSection = ({ data, startupId, onReRunAgent, reRunningAgent, startup
       No finance analysis data available. Run an analysis to generate insights.
     </div>
   );
-
-  const isReRunning = reRunningAgent === 'finance';
 
   const rawY1 = parseToNumeric(data.year1Revenue);
   const rawY2 = parseToNumeric(data.year2Revenue);
@@ -93,8 +91,6 @@ const FinanceSection = ({ data, startupId, onReRunAgent, reRunningAgent, startup
   const cagr = revenueData.length >= 2 && rawY1 > 0
     ? Math.round((Math.pow(rawY3 || rawY2, 1 / (revenueData.length - 1)) / Math.pow(rawY1, 1 / (revenueData.length - 1)) - 1) * 100)
     : null;
-
-  const lastGrowth = revenueData.length >= 2 ? revenueData[revenueData.length - 1].growth : null;
 
   return (
     <div className="space-y-6 animate-fade-in-up">
@@ -256,30 +252,6 @@ const FinanceSection = ({ data, startupId, onReRunAgent, reRunningAgent, startup
               size={110}
               label="Score"
             />
-
-            <div className="flex gap-2">
-
-
-              {startupId && onReRunAgent && (
-                <button
-                  onClick={() => onReRunAgent('finance')}
-                  disabled={isReRunning}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"
-                  style={{
-                    background: '#F9F6EE',
-                    border: '1px solid rgba(0,0,0,0.08)',
-                    color: '#5C5C5C',
-                  }}
-                >
-                  <RefreshCw
-                    className={`w-3.5 h-3.5 ${isReRunning ? 'animate-spin' : ''}`}
-                  />
-
-                  {isReRunning ? 'Running...' : 'Re-Run'}
-                </button>
-              )}
-
-            </div>
 
           </div>
 

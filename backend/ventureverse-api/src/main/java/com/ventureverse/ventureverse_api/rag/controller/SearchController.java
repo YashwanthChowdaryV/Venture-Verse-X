@@ -600,6 +600,16 @@ public class SearchController {
     }
 
     // ==================== HEALTH ====================
+    // Add this to SearchController.java
+
+    @GetMapping("/model")
+    public ResponseEntity<Map<String, String>> getActiveModel() {
+        Map<String, String> response = new LinkedHashMap<>();
+        response.put("model", "google/gemini-2.0-flash-exp:free");
+        response.put("status", "active");
+        response.put("tier", "free");
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping("/health")
     public ResponseEntity<Map<String, Object>> health() {

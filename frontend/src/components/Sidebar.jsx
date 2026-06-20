@@ -3,7 +3,7 @@ import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard, Plus, ChevronDown, Check, X, Brain, Settings,
   Building2, FileText, TrendingUp, Target, BarChart2, Users, Shield,
-  Layers, History, Sparkles, LogOut, Menu, Database
+  Layers, History, Sparkles, LogOut, Menu, Database, Search, Zap, Cpu
 } from 'lucide-react';
 import { startupAPI } from '../api/api';
 import { useAuth } from '../context/AuthContext';
@@ -107,7 +107,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       if (path.includes('/history')) return 'Evaluation History';
       return 'Overview';
     }
-    return 'VentureVerse';
+    return 'VentureVerseX';
   };
 
   const handleLogout = () => {
@@ -207,7 +207,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         {/* HEADER */}
         <div className="p-4 border-b space-y-3" style={{ borderColor: 'rgba(0,0,0,0.08)' }}>
           <div className="flex items-center gap-2 px-1">
-            <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#4A4A4A' }}>Workspace</span>
+            <span className="text-[10px] font-black uppercase tracking-wider" style={{ color: '#4A4A4A' }}>VentureVerseX</span>
             <span className="text-[10px] font-bold" style={{ color: 'rgba(0,0,0,0.35)' }}>/</span>
             <span className="text-[10px] font-black tracking-tight truncate" style={{ color: '#1E1E1E' }}>{getBreadcrumb()}</span>
           </div>
@@ -229,7 +229,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                       {activeStartup ? activeStartup.startupName : 'Select Venture'}
                     </span>
                     <span className="text-[10px] font-bold block truncate leading-tight" style={{ color: '#4A4A4A' }}>
-                      {activeStartup ? activeStartup.industry : 'VentureVerse AI'}
+                      {activeStartup ? activeStartup.industry : 'VentureVerseX AI'}
                     </span>
                   </div>
                 </div>

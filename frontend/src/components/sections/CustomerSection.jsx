@@ -1,4 +1,4 @@
-import { Users, Zap, Heart, Target, MessageCircle, Megaphone, RefreshCw, UserCheck } from 'lucide-react';
+import { Users, Zap, Heart, Target, MessageCircle, Megaphone, UserCheck } from 'lucide-react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer, Tooltip } from 'recharts';
 import ScoreGauge from '../ui/ScoreGauge';
 
@@ -25,15 +25,13 @@ const parsePainLevel = (text) => {
   return 55;
 };
 
-const CustomerSection = ({ data, startupId, onReRunAgent, reRunningAgent }) => {
+const CustomerSection = ({ data }) => {
   if (!data) return (
     <div className="p-6 text-center italic rounded-xl"
       style={{ color: '#5C5C5C', background: '#FCFAF5', border: '1px solid rgba(0,0,0,0.08)' }}>
       No customer analysis data available. Run an analysis to generate insights.
     </div>
   );
-
-  const isReRunning = reRunningAgent === 'customer';
 
   const painData = [
     { dimension: 'Severity', value: parsePainLevel(data.painSeverity), label: data.painSeverity || 'N/A' },
@@ -204,28 +202,6 @@ const CustomerSection = ({ data, startupId, onReRunAgent, reRunningAgent }) => {
               size={110}
               label="Score"
             />
-
-            {startupId && onReRunAgent && (
-              <button
-                onClick={() => onReRunAgent('customer')}
-                disabled={isReRunning}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"
-                style={{
-                  background: '#F9F6EE',
-                  border: '1px solid rgba(0,0,0,0.08)',
-                  color: '#5C5C5C',
-                }}
-              >
-                <RefreshCw
-                  className={`w-3.5 h-3.5 ${isReRunning ? 'animate-spin' : ''
-                    }`}
-                />
-
-                {isReRunning
-                  ? 'Running...'
-                  : 'Re-Run'}
-              </button>
-            )}
 
           </div>
 
@@ -604,16 +580,15 @@ const CustomerSection = ({ data, startupId, onReRunAgent, reRunningAgent }) => {
               />
 
               <div className={`grid grid-cols-1 gap-4 ${(() => {
-                  const stages = data.customerJourney.match(/([A-Z][a-z]+):/g);
-                  const count = stages ? stages.length : 1;
-                  if (count === 2) return 'lg:grid-cols-2';
-                  if (count === 3) return 'lg:grid-cols-3';
-                  if (count === 4) return 'lg:grid-cols-4';
-                  return 'lg:grid-cols-5';
-                })()
+                const stages = data.customerJourney.match(/([A-Z][a-z]+):/g);
+                const count = stages ? stages.length : 1;
+                if (count === 2) return 'lg:grid-cols-2';
+                if (count === 3) return 'lg:grid-cols-3';
+                if (count === 4) return 'lg:grid-cols-4';
+                return 'lg:grid-cols-5';
+              })()
                 }`}>
                 {(() => {
-                  // Split by stage pattern: Word followed by colon
                   const stageRegex = /([A-Z][a-z]+):\s*([^:]*?)(?=\s*[A-Z][a-z]+:|$)/g;
                   const matches = [...data.customerJourney.matchAll(stageRegex)];
 
@@ -623,7 +598,6 @@ const CustomerSection = ({ data, startupId, onReRunAgent, reRunningAgent }) => {
 
                     return (
                       <div key={index} className="relative">
-                        {/* Step Number */}
                         <div
                           className="w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto relative z-10"
                           style={{
@@ -639,7 +613,6 @@ const CustomerSection = ({ data, startupId, onReRunAgent, reRunningAgent }) => {
                           </span>
                         </div>
 
-                        {/* Card */}
                         <div
                           className="rounded-2xl p-4 h-full"
                           style={{

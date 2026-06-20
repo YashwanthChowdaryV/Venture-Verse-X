@@ -24,142 +24,111 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class IdeaValidationServiceImpl
-        implements IdeaValidationService {
+                implements IdeaValidationService {
 
-    private final InvestorAgent investorAgent;
-    private final OpenRouterClient openRouterClient;
-    private final StartupRepository startupRepository;
-    private final UserRepository userRepository;
-    private final AnalysisRepository analysisRepository;
-    private final ObjectMapper objectMapper;
-    private final ContextBuilderService
-        contextBuilderService;
+        private final InvestorAgent investorAgent;
+        private final OpenRouterClient openRouterClient;
+        private final StartupRepository startupRepository;
+        private final UserRepository userRepository;
+        private final AnalysisRepository analysisRepository;
+        private final ObjectMapper objectMapper;
+        private final ContextBuilderService contextBuilderService;
 
-    @Override
-    public IdeaValidationResponse validateIdea(
-            IdeaValidationRequest request) {
+        @Override
+        public IdeaValidationResponse validateIdea(
+                        IdeaValidationRequest request) {
 
-        try {
+                try {
 
-            String email =
-                    SecurityUtils.getCurrentUserEmail();
+                        String email = SecurityUtils.getCurrentUserEmail();
 
-            if (email == null || email.isBlank()) {
-                throw new RuntimeException(
-                        "No authenticated user found"
-                );
-            }
+                        if (email == null || email.isBlank()) {
+                                throw new RuntimeException(
+                                                "No authenticated user found");
+                        }
 
-            User user =
-                    userRepository.findByEmail(email)
-                            .orElseThrow(() ->
-                                    new RuntimeException(
-                                            "User not found: "
-                                                    + email
-                                    ));
+                        User user = userRepository.findByEmail(email)
+                                        .orElseThrow(() -> new RuntimeException(
+                                                        "User not found: "
+                                                                        + email));
 
-            Startup startup =
-                    startupRepository.findById(
-                                    request.getStartupId()
-                            )
-                            .orElseThrow(() ->
-                                    new RuntimeException(
-                                            "Startup not found with ID: "
-                                                    + request.getStartupId()
-                                    ));
+                        Startup startup = startupRepository.findById(
+                                        request.getStartupId())
+                                        .orElseThrow(() -> new RuntimeException(
+                                                        "Startup not found with ID: "
+                                                                        + request.getStartupId()));
 
-                                    String ragContext =
-        contextBuilderService
-                .buildContext(
-                        startup.getIdeaDescription()
-                );
+                        String ragContext = contextBuilderService
+                                        .buildContext(
+                                                        startup.getIdeaDescription());
 
-String prompt =
-        investorAgent.buildPrompt(
-                startup.getStartupName(),
-                startup.getIdeaDescription(),
-                startup.getIndustry(),
-                startup.getTargetMarket()
-        );
+                        String prompt = investorAgent.buildPrompt(
+                                        startup.getStartupName(),
+                                        startup.getIdeaDescription(),
+                                        startup.getIndustry(),
+                                        startup.getTargetMarket());
 
-prompt =
-        ragContext
-        + "\n\n"
-        + prompt;
+                        prompt = ragContext
+                                        + "\n\n"
+                                        + prompt;
 
-            String aiResponse =
-                    openRouterClient.validateIdea(prompt);
-                    System.out.println("\n========== INVESTOR AI RESPONSE ==========");
-System.out.println(aiResponse);
-System.out.println("==========================================\n");
+                        String aiResponse = openRouterClient.validateIdea(prompt);
+                        System.out.println("\n========== INVESTOR AI RESPONSE ==========");
+                        System.out.println(aiResponse);
+                        System.out.println("==========================================\n");
 
+                        String cleanedResponse = aiResponse
+                                        .replace("```json", "")
+                                        .replace("```", "")
+                                        .trim();
 
-String cleanedResponse =
-        aiResponse
-                .replace("```json", "")
-                .replace("```", "")
-                .trim();
+                        IdeaValidationResponse response = objectMapper.readValue(
+                                        cleanedResponse,
+                                        IdeaValidationResponse.class);
 
-                
-IdeaValidationResponse response =
-        objectMapper.readValue(
-                cleanedResponse,
-                IdeaValidationResponse.class
-        );
+                        Analysis analysis = Analysis.builder()
+                                        .user(user)
+                                        .startup(startup)
+                                        .prompt(prompt)
+                                        .response(aiResponse)
+                                        .score(response.getScore())
+                                        .createdAt(LocalDateTime.now())
+                                        .build();
 
-            Analysis analysis =
-                    Analysis.builder()
-                            .user(user)
-                            .startup(startup)
-                            .prompt(prompt)
-                            .response(aiResponse)
-                            .score(response.getScore())
-                            .createdAt(LocalDateTime.now())
-                            .build();
+                        analysisRepository.save(analysis);
 
-            analysisRepository.save(analysis);
+                        return response;
 
-            return response;
+                } catch (Exception e) {
 
-        } catch (Exception e) {
-
-            throw new RuntimeException(
-                    "AI validation failed: "
-                            + e.getMessage(),
-                    e
-            );
+                        throw new RuntimeException(
+                                        "AI validation failed: "
+                                                        + e.getMessage(),
+                                        e);
+                }
         }
-    }
 
-    @Override
-    public List<AnalysisHistoryResponse> getHistory(
-            Long startupId) {
+        @Override
+        public List<AnalysisHistoryResponse> getHistory(
+                        Long startupId) {
 
-        Startup startup =
-                startupRepository.findById(startupId)
-                        .orElseThrow(() ->
-                                new RuntimeException(
-                                        "Startup not found"
-                                ));
+                Startup startup = startupRepository.findById(startupId)
+                                .orElseThrow(() -> new RuntimeException(
+                                                "Startup not found"));
 
-        return analysisRepository
-                .findByStartupIdOrderByCreatedAtDesc(
-                        startup.getId()
-                )
-                .stream()
-                .map(analysis ->
-                        AnalysisHistoryResponse
-                                .builder()
-                                .id(analysis.getId())
-                                .score(analysis.getScore())
-                                .response(
-                                        analysis.getResponse()
-                                )
-                                .createdAt(
-                                        analysis.getCreatedAt()
-                                )
-                                .build()
-                )
-                .toList();
-    }
+                return analysisRepository
+                                .findByStartupIdOrderByCreatedAtDesc(
+                                                startup.getId())
+                                .stream()
+                                .map(analysis -> AnalysisHistoryResponse
+                                                .builder()
+                                                .id(analysis.getId())
+                                                .score(analysis.getScore())
+                                                .response(
+                                                                analysis.getResponse())
+                                                .createdAt(
+                                                                analysis.getCreatedAt())
+                                                .build())
+                                .toList();
+        }
 }

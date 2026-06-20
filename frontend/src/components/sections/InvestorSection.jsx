@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
     TrendingUp, DollarSign, BarChart2, Zap, Target,
-    ArrowUpRight, ArrowDownRight, RefreshCw, Lightbulb, AlertTriangle, Download
+    ArrowUpRight, ArrowDownRight, Lightbulb, AlertTriangle
 } from 'lucide-react';
 import ScoreGauge from '../ui/ScoreGauge';
 import ExportReportModal from '../ui/ExportReportModal';
 
-const InvestorSection = ({ data, startupId, onReRunAgent, reRunningAgent, startupName = 'Venture' }) => {
+const InvestorSection = ({ data, startupName = 'Venture' }) => {
     if (!data) return (
         <div className="p-6 text-center italic rounded-xl"
             style={{ color: '#5C5C5C', background: '#FCFAF5', border: '1px solid rgba(0,0,0,0.08)' }}>
@@ -14,7 +14,6 @@ const InvestorSection = ({ data, startupId, onReRunAgent, reRunningAgent, startu
         </div>
     );
 
-    const isReRunning = reRunningAgent === 'investor';
     const [isExportOpen, setIsExportOpen] = useState(false);
 
     return (
@@ -104,28 +103,6 @@ const InvestorSection = ({ data, startupId, onReRunAgent, reRunningAgent, startu
                             size={110}
                             label="Score"
                         />
-
-                        <div className="flex gap-2">
-
-
-                            {startupId && onReRunAgent && (
-                                <button
-                                    onClick={() => onReRunAgent('investor')}
-                                    disabled={isReRunning}
-                                    className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"
-                                    style={{
-                                        background: '#F9F6EE',
-                                        border: '1px solid rgba(0,0,0,0.08)',
-                                        color: '#5C5C5C',
-                                    }}
-                                >
-                                    <RefreshCw
-                                        className={`w-3.5 h-3.5 ${isReRunning ? 'animate-spin' : ''}`}
-                                    />
-                                    {isReRunning ? 'Running...' : 'Re-Run'}
-                                </button>
-                            )}
-                        </div>
 
                     </div>
 

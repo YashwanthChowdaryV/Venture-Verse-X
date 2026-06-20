@@ -1,15 +1,15 @@
 import { useRef, useEffect } from 'react';
 
 const LetterGlitch = ({
-    glitchColors = ['#2b4539', '#61dca3', '#61b3dc'],
+    glitchColors = ['#F2CF7E', '#FFBF00', '#FF7900'],
     className = '',
     glitchSpeed = 50,
-    centerVignette = false,
-    outerVignette = true,
+    centerVignette = true,
+    outerVignette = false,
     smooth = true,
-    backgroundColor = '#000000',
-    centerVignetteColor = 'rgba(0,0,0,0.8)',
-    outerVignetteColor = 'rgba(0,0,0,1)',
+    backgroundColor = '#F6F3EA',
+    centerVignetteColor = 'rgba(246,243,234,0.85)',
+    outerVignetteColor = 'rgba(246,243,234,0.95)',
     characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$&*()-_+=/[]{};:<>.,0123456789'
 }) => {
     const canvasRef = useRef(null);

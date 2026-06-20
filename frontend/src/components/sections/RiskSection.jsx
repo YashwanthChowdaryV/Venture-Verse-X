@@ -31,15 +31,13 @@ const parseRiskLevel = (text) => {
   return { level: 50, color: '#F2CF7E', label: 'Assessed', bg: 'rgba(242,207,126,0.08)', textColor: '#FF7900' };
 };
 
-const RiskSection = ({ data, startupId, onReRunAgent, reRunningAgent }) => {
+const RiskSection = ({ data, startupId }) => {
   if (!data) return (
     <div className="p-6 text-center italic rounded-xl"
       style={{ color: '#5C5C5C', background: '#FCFAF5', border: '1px solid rgba(0,0,0,0.08)' }}>
       No risk analysis data available. Run an analysis to generate insights.
     </div>
   );
-
-  const isReRunning = reRunningAgent === 'risk';
 
   const riskDimensions = [
     { key: 'marketRisk', name: 'Market', value: data.marketRisk },
@@ -234,25 +232,6 @@ const RiskSection = ({ data, startupId, onReRunAgent, reRunningAgent }) => {
               >
                 {data.verdict}
               </div>
-            )}
-
-            {startupId && onReRunAgent && (
-              <button
-                onClick={() => onReRunAgent('risk')}
-                disabled={isReRunning}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold cursor-pointer"
-                style={{
-                  background: '#FFBF00',
-                  color: '#1E1E1E',
-                }}
-              >
-                <RefreshCw
-                  className={`w-4 h-4 ${isReRunning ? 'animate-spin' : ''}`}
-                />
-                <span>
-                  {isReRunning ? 'Running Analysis...' : 'Re-Run Analysis'}
-                </span>
-              </button>
             )}
 
           </div>

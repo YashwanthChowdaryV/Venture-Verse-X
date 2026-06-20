@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Target, Shield, Lock, Zap, TrendingUp, RefreshCw, Layers, AlertTriangle, CheckCircle, Download } from 'lucide-react';
+import { Target, Shield, Lock, Zap, TrendingUp, Layers, AlertTriangle, CheckCircle } from 'lucide-react';
 import ScoreGauge from '../ui/ScoreGauge';
 import ExportReportModal from '../ui/ExportReportModal';
 
-const CompetitorSection = ({ data, startupId, onReRunAgent, reRunningAgent, startupName = 'Venture' }) => {
+const CompetitorSection = ({ data, startupId, startupName = 'Venture' }) => {
   if (!data) return (
     <div className="p-6 text-center italic rounded-xl"
       style={{ color: '#5C5C5C', background: '#FCFAF5', border: '1px solid rgba(0,0,0,0.08)' }}>
@@ -11,7 +11,6 @@ const CompetitorSection = ({ data, startupId, onReRunAgent, reRunningAgent, star
     </div>
   );
 
-  const isReRunning = reRunningAgent === 'competitor';
   const [isExportOpen, setIsExportOpen] = useState(false);
 
   return (
@@ -98,31 +97,6 @@ const CompetitorSection = ({ data, startupId, onReRunAgent, reRunningAgent, star
               size={110}
               label="Score"
             />
-
-            <div className="flex gap-2">
-
-
-              {startupId && onReRunAgent && (
-                <button
-                  onClick={() => onReRunAgent('competitor')}
-                  disabled={isReRunning}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"
-                  style={{
-                    background: '#F9F6EE',
-                    border: '1px solid rgba(0,0,0,0.08)',
-                    color: '#5C5C5C',
-                  }}
-                >
-                  <RefreshCw
-                    className={`w-3.5 h-3.5 ${isReRunning ? 'animate-spin' : ''
-                      }`}
-                  />
-
-                  {isReRunning ? 'Running...' : 'Re-Run'}
-                </button>
-              )}
-
-            </div>
 
           </div>
 
