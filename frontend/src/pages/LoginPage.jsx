@@ -99,7 +99,7 @@ const LoginPage = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = 'https://ventureversex-backend-deploy.onrender.com/oauth2/authorization/google';
   };
 
   if (showSuccess) {

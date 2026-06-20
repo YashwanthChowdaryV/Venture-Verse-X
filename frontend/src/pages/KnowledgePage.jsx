@@ -11,8 +11,7 @@ import {
   Mountain, TreePine, Flower2, Heart, Music, Palette, ChevronDown
 } from 'lucide-react';
 import GridScan from '../components/GridScan';
-
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://ventureversex-backend-deploy.onrender.com';
 
 const THINKING_STAGES = [
   { label: 'Querying VentureVerse knowledge base...', icon: Search },
@@ -594,8 +593,8 @@ const KnowledgePage = () => {
                 <button
                   onClick={() => setShowSettings(!showSettings)}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all text-[11px] font-bold border ${showSettings
-                      ? 'bg-[#FFBF00]/20 text-[#FF7900] border-[#FF7900]/30'
-                      : 'bg-white/50 text-[#5C5C5C] border-[#F2CF7E]/30 hover:bg-[#F2CF7E]/10'
+                    ? 'bg-[#FFBF00]/20 text-[#FF7900] border-[#FF7900]/30'
+                    : 'bg-white/50 text-[#5C5C5C] border-[#F2CF7E]/30 hover:bg-[#F2CF7E]/10'
                     }`}
                 >
                   <Layers className="w-3.5 h-3.5" />
@@ -614,8 +613,8 @@ const KnowledgePage = () => {
                         key={i}
                         onClick={() => { setAnalysisLevel(i); setShowSettings(false); }}
                         className={`w-full text-left px-3 py-2 rounded-lg text-[12px] font-semibold transition-all ${analysisLevel === i
-                            ? 'bg-[#FF7900] text-white'
-                            : 'text-[#5C5C5C] hover:bg-[#F9F6EE]'
+                          ? 'bg-[#FF7900] text-white'
+                          : 'text-[#5C5C5C] hover:bg-[#F9F6EE]'
                           }`}
                       >
                         <div>{level.label}</div>

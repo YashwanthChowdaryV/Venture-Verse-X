@@ -6,8 +6,7 @@ import { Play, FileText, TrendingUp, Download, CheckCircle2, Target } from 'luci
 import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { orchestratorAPI } from '../api/api';
-
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'https://ventureversex-backend-deploy.onrender.com';
 
 const ExecutiveSummaryPage = () => {
   const { report, startup, runFullAnalysis } = useOutletContext();
