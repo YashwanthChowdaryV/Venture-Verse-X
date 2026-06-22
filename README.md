@@ -10,13 +10,11 @@ VentureVerseX simulates a virtual investment committee — seven specialized AI 
 ![Spring Security](https://img.shields.io/badge/Security-Spring_Security-success)
 ![OAuth2](https://img.shields.io/badge/Auth-Google_OAuth2-blue)
 ![JWT](https://img.shields.io/badge/Auth-JWT-success)
-
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-blue)
 ![Qdrant](https://img.shields.io/badge/Qdrant-Vector_DB-red)
 ![RAG](https://img.shields.io/badge/AI-RAG-orange)
 ![Multi-Agent](https://img.shields.io/badge/AI-Multi_Agent-purple)
 ![OpenRouter](https://img.shields.io/badge/LLM-OpenRouter-purple)
-
 ![Apache Tika](https://img.shields.io/badge/Documents-Apache_Tika-blue)
 ![Maven](https://img.shields.io/badge/Build-Maven-red)
 ![Render](https://img.shields.io/badge/Deploy-Render-black)
