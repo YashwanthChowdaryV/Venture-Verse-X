@@ -322,24 +322,6 @@ sequenceDiagram
 ---
 
 ## 5. Multi-Agent Architecture
-
-### Why Multi-Agent?
-
-To separate investment, finance, customer, risk, and product strategy reasoning.
-
-### Why Qdrant?
-
-Open-source vector database with strong metadata filtering.
-
-### Why OpenRouter?
-
-Model flexibility and provider abstraction.
-
-### Why PostgreSQL?
-
-Strong relational integrity and report ownership guarantees.
-VentureVerse's analysis quality derives from agent specialization. Each agent is an isolated reasoning unit with its own expert persona, retrieval strategy, prompt structure, and output schema. Agents do not share intermediate state — they are given the same startup description and independently scored, eliminating anchoring bias.
-
 ---
 
 ### Investor Agent
@@ -1060,6 +1042,109 @@ VentureVerse/
 | Cost | Lower per-call cost | Higher per-call cost |
 | Performance | Competitive on retrieval benchmarks | Strong baseline |
 | API simplicity | REST, straightforward | REST, requires key rotation |
+
+## Architecture Decisions
+
+### Why Multi-Agent Architecture?
+
+Startup evaluation is inherently multi-dimensional. A single LLM prompt tends to produce broad but shallow analysis across investment potential, competition, financial viability, customer demand, risk, and product strategy.
+
+VentureVerseX uses specialized AI agents, each focused on a single domain, to produce deeper and more structured reasoning. This approach improves analysis quality, reduces prompt complexity, and enables independent scoring for each business dimension.
+
+**Tradeoff:** Increased latency due to multiple LLM calls during report generation.
+
+---
+
+### Why Retrieval-Augmented Generation (RAG)?
+
+Startup intelligence depends on domain-specific knowledge such as venture capital frameworks, startup case studies, product-market fit research, and SaaS growth strategies.
+
+Instead of relying solely on LLM training data, VentureVerseX retrieves relevant knowledge from a curated vector database and injects it into agent prompts at runtime.
+
+This enables:
+
+- More grounded recommendations
+- Reduced hallucinations
+- Easily updatable knowledge without model retraining
+- Better alignment with real-world startup frameworks
+
+**Tradeoff:** Additional infrastructure complexity and retrieval latency.
+
+---
+
+### Why PostgreSQL?
+
+The platform manages strongly related entities including:
+
+- Users
+- Startups
+- Startup Reports
+
+PostgreSQL provides:
+
+- ACID transactions
+- Referential integrity
+- Strong relational modeling
+- Mature ecosystem
+- Reliable production deployment
+
+This makes it a better fit than a document database for VentureVerseX's ownership and reporting relationships.
+
+---
+
+### Why Qdrant?
+
+Qdrant was selected as the vector database because it provides:
+
+- High-performance semantic search
+- Metadata filtering
+- Open-source flexibility
+- Cloud-hosted deployment options
+- Cost-effective scaling
+
+The platform uses Qdrant to store and retrieve startup knowledge embeddings used by the RAG pipeline.
+
+---
+
+### Why OpenRouter?
+
+VentureVerseX is designed to remain model-agnostic.
+
+OpenRouter provides:
+
+- Access to multiple LLM providers through a single API
+- Easy model switching
+- Cost optimization
+- Provider redundancy
+- Future extensibility
+
+This prevents vendor lock-in and allows experimentation with different models without changing application logic.
+
+---
+
+### Why Spring Boot?
+
+Spring Boot was chosen for its:
+
+- Enterprise-grade architecture
+- Mature security ecosystem
+- Built-in OAuth2 support
+- Robust dependency injection
+- Strong integration with PostgreSQL and REST APIs
+
+The framework enables rapid development while maintaining production-level reliability and scalability.
+
+---
+
+### Why OAuth2 + JWT?
+
+OAuth2 and JWT solve different problems.
+
+OAuth2 handles identity verification through Google authentication.
+
+JWT provides stateless authorization for subsequent API requests.
+
+Combining both approaches allows users to authenticate securely through Google while enabling scalable backend authorization without server-side sessions.
 
 ---
 
