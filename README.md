@@ -1411,19 +1411,45 @@ A conversational agent layer on top of the existing report — founders can ask 
 
 ---
 
-## License
-
-MIT License — see [LICENSE](./LICENSE) for details.
-
----
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/agent-memory`
-3. Commit changes following [Conventional Commits](https://www.conventionalcommits.org/)
-4. Open a pull request with description of changes and test coverage
+Contributions, suggestions, and improvements are welcome.
+
+Fork the repository
+Create a feature branch
+git checkout -b feature/your-feature
+Commit your changes
+git commit -m "feat: add new feature"
+Push your branch
+git push origin feature/your-feature
+Open a Pull Request
 
 ---
+
+## Author
+V. Yashwanth Kumar
+
+Computer Science Engineering Student | Backend Developer | AI Systems Enthusiast
+
+Email: yashwanthkumarv155@gmail.com
+
+GitHub Repository:
+https://github.com/YashwanthChowdaryV/Venture-Verse-X
+
+GitHub Profile:
+https://github.com/YashwanthChowdaryV
+
+---
+
+Support
+
+If you found this project useful:
+
+⭐ Star the repository
+
+🍴 Fork the repository
+
+📝 Share feedback and suggestions
 
 *VentureVerseX — Built to give every founder access to investment-committee-grade startup analysis.*
