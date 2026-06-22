@@ -1417,20 +1417,25 @@ A conversational agent layer on top of the existing report — founders can ask 
 Contributions, suggestions, and improvements are welcome.
 
 Fork the repository
+
 Create a feature branch
+
 git checkout -b feature/your-feature
+
 Commit your changes
+
 git commit -m "feat: add new feature"
+
 Push your branch
+
 git push origin feature/your-feature
+
 Open a Pull Request
 
 ---
 
 ## Author
 V. Yashwanth Kumar
-
-Computer Science Engineering Student | Backend Developer | AI Systems Enthusiast
 
 Email: yashwanthkumarv155@gmail.com
 
@@ -1441,15 +1446,5 @@ GitHub Profile:
 https://github.com/YashwanthChowdaryV
 
 ---
-
-Support
-
-If you found this project useful:
-
-⭐ Star the repository
-
-🍴 Fork the repository
-
-📝 Share feedback and suggestions
 
 *VentureVerseX — Built to give every founder access to investment-committee-grade startup analysis.*
