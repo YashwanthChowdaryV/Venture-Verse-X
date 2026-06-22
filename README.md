@@ -36,7 +36,7 @@ VentureVerseX simulates a virtual investment committee — seven specialized AI 
 
 ## 1. How VentureVerseX Works
 
-VentureVerseX is not a chatbot. It is not a prompt wrapper. It is a multi-agent reasoning system built around a structured, retrieval-augmented workflow that mirrors how real investment committees evaluate startups.
+VentureVerseX is not a chatbot. It is not a generic prompt wrapper. It is a multi-agent reasoning system built around a structured, retrieval-augmented workflow that mirrors how real investment committees evaluate startups.
 
 ### The Core Problem
 
