@@ -4,6 +4,11 @@
 
 VentureVerseX simulates a virtual investment committee — seven specialized AI agents, each grounded in retrieved venture-capital knowledge, independently evaluate a startup idea and collaborate to produce a structured intelligence report with scores, verdicts, and a downloadable PDF.
 
+![Java](https://img.shields.io/badge/Java-21-orange)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5-green)
+![React](https://img.shields.io/badge/React-19-blue)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-blue)
+![Qdrant](https://img.shields.io/badge/Qdrant-Vector_DB-red)
 ---
 
 ## Table of Contents
@@ -318,6 +323,21 @@ sequenceDiagram
 
 ## 5. Multi-Agent Architecture
 
+### Why Multi-Agent?
+
+To separate investment, finance, customer, risk, and product strategy reasoning.
+
+### Why Qdrant?
+
+Open-source vector database with strong metadata filtering.
+
+### Why OpenRouter?
+
+Model flexibility and provider abstraction.
+
+### Why PostgreSQL?
+
+Strong relational integrity and report ownership guarantees.
 VentureVerse's analysis quality derives from agent specialization. Each agent is an isolated reasoning unit with its own expert persona, retrieval strategy, prompt structure, and output schema. Agents do not share intermediate state — they are given the same startup description and independently scored, eliminating anchoring bias.
 
 ---
@@ -1181,7 +1201,7 @@ envVars:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<org>/VentureVerseX.git
+git clone https://github.com/YashwanthChowdaryV/Venture-Verse-X.git
 cd VentureVerseX/backend/ventureverse-api
 
 # 2. Copy the example properties file
@@ -1217,9 +1237,9 @@ Frontend starts on: `http://localhost:5173`
 
 **Option A — Local PostgreSQL:**
 ```sql
-CREATE DATABASE ventureverse;
-CREATE USER ventureverse_user WITH PASSWORD 'yourpassword';
-GRANT ALL PRIVILEGES ON DATABASE ventureverse TO ventureverse_user;
+CREATE DATABASE ventureversex;
+CREATE USER ventureversex_user WITH PASSWORD 'yourpassword';
+GRANT ALL PRIVILEGES ON DATABASE ventureversex TO ventureversex_user;
 ```
 
 **Option B — Neon (recommended):**
@@ -1374,7 +1394,7 @@ Screenshots are embedded inline throughout this document at the relevant section
 
 | Screenshot | Location in Document | File |
 |---|---|---|
-| **Landing Page** | §1 How VentureVerse Works | [LandingPage.png](frontend/docs/screenshots/LandingPage.png) |
+| **Landing Page** | §1 How VentureVerseX Works | [LandingPage.png](frontend/docs/screenshots/LandingPage.png) |
 | **Create Startup** | §10 API Reference — POST /api/v1/startups | [CreateStartUp.png](frontend/docs/screenshots/CreateStartUp.png) |
 | **Dashboard** | §10 API Reference — GET /api/v1/startups/{id} | [Dashboard.png](frontend/docs/screenshots/Dashboard.png) |
 | **Investor Verdict** | §5 Multi-Agent Architecture — Investor Agent | [InvestorVerdict.png](frontend/docs/screenshots/InvestorVerdict.png) |
@@ -1404,33 +1424,60 @@ Match startup profiles to actual VC firms based on investment thesis alignment. 
 Accept uploaded pitch decks (PDF) and extract structured data (problem, solution, market size, team, traction) using Apache Tika + a dedicated extraction agent. This extends the startup creation flow without requiring founders to manually fill all fields.
 
 ### Startup Benchmarking
-Compare a startup's scores against anonymized historical reports in the same industry. Provides context: "Your financial score of 58 is in the 40th percentile for Health Tech startups on VentureVerse."
+Compare a startup's scores against anonymized historical reports in the same industry. Provides context: "Your financial score of 58 is in the 40th percentile for Health Tech startups on VentureVerseX."
 
 ### Autonomous Venture Advisor
 A conversational agent layer on top of the existing report — founders can ask follow-up questions ("How do I improve my financial score?" / "Which competitors should I research?") and receive context-aware answers grounded in the already-generated report and knowledge base.
 
 ---
 
-
 ## Contributing
 
-Contributions, suggestions, and improvements are welcome.
+Contributions, feature requests, bug reports, and suggestions are welcome.
 
-Fork the repository
+### Getting Started
 
-Create a feature branch
+1. Fork the repository
 
-git checkout -b feature/your-feature
+2. Clone your fork
 
-Commit your changes
+```bash
+git clone https://github.com/YashwanthChowdaryV/Venture-Verse-X.git
+cd Venture-Verse-X
+```
 
-git commit -m "feat: add new feature"
+3. Create a feature branch
 
-Push your branch
+```bash
+git checkout -b feature/your-feature-name
+```
 
-git push origin feature/your-feature
+4. Make your changes and commit
 
-Open a Pull Request
+```bash
+git commit -m "feat: add your feature"
+```
+
+5. Push your branch
+
+```bash
+git push origin feature/your-feature-name
+```
+
+6. Open a Pull Request describing:
+   - What was changed
+   - Why it was changed
+   - Any testing performed
+
+### Contribution Guidelines
+
+- Follow existing code style and project structure.
+- Keep commits focused and meaningful.
+- Write clear commit messages using Conventional Commits.
+- Update documentation when introducing new features.
+- Ensure the application builds and runs successfully before submitting a Pull Request.
+
+Thank you for contributing to VentureVerseX! 🚀
 
 ---
 
