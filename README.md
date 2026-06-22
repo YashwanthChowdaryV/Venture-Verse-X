@@ -13,7 +13,7 @@ VentureVerseX simulates a virtual investment committee — seven specialized AI 
 
 ## Table of Contents
 
-1. [How VentureVerse Works](#1-how-ventureverse-works)
+1. [How VentureVerseX Works](#1-how-ventureverse-works)
 2. [Authentication Architecture](#2-authentication-architecture)
 3. [Complete System Architecture](#3-complete-system-architecture)
 4. [Startup Analysis Execution Flow](#4-startup-analysis-execution-flow)
@@ -34,9 +34,9 @@ VentureVerseX simulates a virtual investment committee — seven specialized AI 
 
 ---
 
-## 1. How VentureVerse Works
+## 1. How VentureVerseX Works
 
-VentureVerse is not a chatbot. It is not a prompt wrapper. It is a multi-agent reasoning system built around a structured, retrieval-augmented workflow that mirrors how real investment committees evaluate startups.
+VentureVerseX is not a chatbot. It is not a prompt wrapper. It is a multi-agent reasoning system built around a structured, retrieval-augmented workflow that mirrors how real investment committees evaluate startups.
 
 ### The Core Problem
 
@@ -87,7 +87,7 @@ GET /api/v1/reports/export/{reportId} triggers PdfGenerator (iText + JFreeChart)
 PDF returned as byte[] — downloaded by browser
 ```
 
-This entire lifecycle — from startup creation to PDF download — is what VentureVerse exists to execute reliably, repeatably, and with grounded, expert-level AI reasoning at its core.
+This entire lifecycle — from startup creation to PDF download — is what VentureVerseX exists to execute reliably, repeatably, and with grounded, expert-level AI reasoning at its core.
 
 ### Five Workflows Distinguished
 
@@ -106,7 +106,7 @@ This entire lifecycle — from startup creation to PDF download — is what Vent
 
 ## 2. Authentication Architecture
 
-VentureVerse implements two authentication paths — traditional credential login and Google OAuth2 — both converging on the same JWT-based session model. This is deliberate: OAuth2 handles identity federation, JWT handles stateless authorization for every subsequent API call.
+VentureVerseX implements two authentication paths — traditional credential login and Google OAuth2 — both converging on the same JWT-based session model. This is deliberate: OAuth2 handles identity federation, JWT handles stateless authorization for every subsequent API call.
 
 ### Traditional Authentication Flow
 
@@ -464,7 +464,7 @@ graph LR
 
 ## 6. RAG Pipeline Architecture
 
-### Why RAG Exists in VentureVerse
+### Why RAG Exists in VentureVerseX
 
 Without RAG, every agent prompt would contain only the founder's startup description and the LLM's pre-trained parametric knowledge. Pre-trained knowledge is:
 
@@ -562,7 +562,7 @@ Response:
 
 ## 8. Database Design
 
-VentureVerse uses Neon PostgreSQL as its primary relational store. All user identity, startup metadata, and full report content (including agent JSON outputs) are stored here.
+VentureVerseX uses Neon PostgreSQL as its primary relational store. All user identity, startup metadata, and full report content (including agent JSON outputs) are stored here.
 
 ### Entity Relationship Diagram
 
@@ -916,7 +916,7 @@ Base URL: `https://ventureversex-backend-deploy.onrender.com/api/v1`
 ## 11. Project Structure
 
 ```
-VentureVerse/
+VentureVerseX/
 ├── backend/
 │   └── ventureverse-api/
 │       ├── src/main/java/com/ventureverse/ventureverse_api/
@@ -1168,7 +1168,7 @@ Agent JSON outputs are stored as `TEXT` columns rather than normalized tables. T
 
 ### Why OAuth2 When JWT Already Exists?
 
-OAuth2 is not redundant with JWT — it operates at a different layer. OAuth2 delegates identity verification to Google. VentureVerse does not manage Google passwords, MFA, or account recovery for OAuth users. JWT is VentureVerse's authorization mechanism once identity is established. Removing OAuth2 would require building password reset flows, email verification, and social login alternatives from scratch.
+OAuth2 is not redundant with JWT — it operates at a different layer. OAuth2 delegates identity verification to Google. VentureVerseX does not manage Google passwords, MFA, or account recovery for OAuth users. JWT is VentureVerse's authorization mechanism once identity is established. Removing OAuth2 would require building password reset flows, email verification, and social login alternatives from scratch.
 
 ### Scaling Bottlenecks
 
